@@ -1,15 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+{% extends "./base.html" %}
+
+{% block title %}{{ post.title }} - My Python Blog{% endblock %}
+
+{% block content %}
     <a href="{% url 'post_list' %}">Back to all posts</a>
-    <h1>{{ post.title }}</h1>
-    <p>{{ post.author }}</p>
-    <p>{{ post.created_at }}</p>
-    <p>{{ post.content }}</p>
-</body>
-</html>
+    <h1 class="text-blue-900 mb-6">{{ post.title }}</h1>
+    <p class="text-gray-700">{{ post.author }}</p>
+    <p class="text-gray-500">{{ post.created_at }}</p>
+    <p class="text-gray-800">{{ post.content }}</p>
+{% endblock %}
