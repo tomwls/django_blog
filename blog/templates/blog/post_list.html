@@ -3,10 +3,10 @@
 {% block title %}Django Blog{% endblock %}
 
 {% block header %}
-<header class="w-full bg-custombg flex items-center justify-between px-4 py-4 mb-10 border-b-2 border-gray-200">
+<header class="w-full bg-transparent flex items-center justify-between px-4 py-4 mb-10 border-b border-gray-200">
     <!-- Logo -->
     <div class="flex items-center gap-3">
-        <span class="font-bold text-xl font-semibold text-gray-800">django-blog</span>
+        <span>🐍</span><span class="inline-block bg-logobg rounded px-2 py-1 text-blue-600 text-base font-semibold">DjangoBlog</span>
     </div>
     <!-- Menu -->
     <nav class="flex gap-6">
@@ -15,8 +15,13 @@
         <a href="#" class="text-gray-700 hover:text-blue-500 font-medium"></a>
     </nav>
     <!-- Search -->
-    <form method="get" class="flex w-72">
-            <input type="text" name="q" value="{{ query|default:'' }}" placeholder="Search posts (Enter)" class="border rounded px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-100">
+    <form method="get" class="w-72">
+        <div class="relative">
+            <input type="text" name="q" value="{{ query|default:'' }}" placeholder="Search posts (Enter)" class="border border-gray-200 px-4 py-2 w-full focus:outline-none focus:ring-1 focus:ring-gray-200 pr-10">
+            <span class="absolute inset-y-0 right-2 flex items-center pointer-events-none">
+                {{ enter_icon|safe }}
+            </span>
+        </div>
     </form>
 </header>
 {% endblock %}
@@ -28,7 +33,7 @@
             {% for post in posts %}
                 <article>
                     <h2 class="text-2xl font-semibold mb-2">
-                        <a href="{% url 'post_detail' slug=post.slug %}" class="text-black hover:underline">{{ post.title }}</a>
+                        <a href="{% url 'post_detail' slug=post.slug %}" class="text-blue-600 underline">{{ post.title }}</a>
                     </h2>
                     <div class="flex items-center gap-2 mb-1">
                         <p class="inline-block bg-yellow-200 text-gray-800 font-semibold text-sm px-2 py-1 rounded">{{ post.author.username|title }}</p>
@@ -36,7 +41,7 @@
                         <p class="text-black text-sm">{{ post.created_at }}</p>
                     </div>
                     <p class="text-black mb-4">{{ post.content|truncatewords:30 }}</p>
-                    <a href="{% url 'post_detail' slug=post.slug %}" class="text-blue-500 hover:underline">{{ enter_icon|safe }} Read more</a>
+                    <a href="{% url 'post_detail' slug=post.slug %}" class="text-blue-600 hover:underline">Read more</a>
                     <hr class="my-8 border-t-1 border-gray-200 rounded">
                 </article>
             {% empty %}
