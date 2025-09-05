@@ -1,22 +1,48 @@
 {% extends "./base.html" %}
 
-{% block title %}My Python Blog{% endblock %}
+{% block title %}Django Blog{% endblock %}
+
+{% block header %}
+<header class="w-full bg-custombg flex items-center justify-between px-4 py-4 mb-10 border-b-2 border-gray-200">
+    <!-- Logo -->
+    <div class="flex items-center gap-3">
+        <span class="font-bold text-xl font-semibold text-gray-800">django-blog</span>
+    </div>
+    <!-- Menu -->
+    <nav class="flex gap-6">
+        <a href="{% url 'post_list' %}" class="text-gray-700 hover:text-blue-500 font-medium"></a>
+        <a href="#" class="text-gray-700 hover:text-blue-500 font-medium"></a>
+        <a href="#" class="text-gray-700 hover:text-blue-500 font-medium"></a>
+    </nav>
+    <!-- Search -->
+    <form method="get" class="flex w-72">
+            <input type="text" name="q" value="{{ query|default:'' }}" placeholder="Search posts (Enter)" class="border rounded px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-100">
+    </form>
+</header>
+{% endblock %}
 
 {% block content %}
-    <h1 class="text-2xl font-bold mb-10 text-black">Blog Posts</h1>
-    <div class="space-y-8">
-        {% for post in posts %}
-            <article>
-                <h2 class="text-2xl font-semibold mb-2">
-                    <a href="{% url 'post_detail' slug=post.slug %}" class="text-black hover:underline">{{ post.title }}</a>
-                </h2>
-                <p class="text-black mb-1">👤 {{ post.author }}</p>
-                <p class="text-black mb-3">🗓️ {{ post.created_at }}</p>
-                <p class="text-black mb-4">{{ post.content|truncatewords:30 }}</p>
-                <a href="{% url 'post_detail' slug=post.slug %}" class="text-blue-500 hover:underline">Read more</a>
-            </article>
-        {% empty %}
-            <p class="text-black">No posts yet!</p>
-        {% endfor %}
+<div class="flex flex-row gap-8">
+    <div class="flex-">
+        <div class="space-y-8">
+            {% for post in posts %}
+                <article>
+                    <h2 class="text-2xl font-semibold mb-2">
+                        <a href="{% url 'post_detail' slug=post.slug %}" class="text-black hover:underline">{{ post.title }}</a>
+                    </h2>
+                    <div class="flex items-center gap-2 mb-1">
+                        <p class="inline-block bg-yellow-200 text-gray-800 font-semibold text-sm px-2 py-1 rounded">{{ post.author.username|title }}</p>
+                        <p>{{ clock_icon|safe }}</p>
+                        <p class="text-black text-sm">{{ post.created_at }}</p>
+                    </div>
+                    <p class="text-black mb-4">{{ post.content|truncatewords:30 }}</p>
+                    <a href="{% url 'post_detail' slug=post.slug %}" class="text-blue-500 hover:underline">{{ enter_icon|safe }} Read more</a>
+                    <hr class="my-8 border-t-1 border-gray-200 rounded">
+                </article>
+            {% empty %}
+                <p class="text-black">No posts yet!</p>
+            {% endfor %}
+        </div>
     </div>
+</div>
 {% endblock %}
