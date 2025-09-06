@@ -12,28 +12,14 @@
         {% block header %}
         {% endblock %}
     </header>
-    <div class="flex max-w-5xl mx-auto gap-8">
+    <div class="flex px-10 mx-auto gap-8">
         <main class="flex-1">
             {% block content %}
             {% endblock %}
         </main>
-        <aside class="w-80">
+        <aside class="w-100 hidden md:block">
             {% block sidebar %}
-            <!-- Example sidebar content -->
-            <section>
-                <h2 class="text-lg font-bold mb-2">About Me</h2>
-            <p class="text-gray-700 mb-10">Brief bio goes here. You can add your profile image and a short description.</p>
-            </section>
-            <section class="mb-8">
-                <h2 class="text-lg font-bold mb-2">Recent Posts</h2>
-                <ul class="space-y-2">
-                    {% for recent in recent_posts %}
-                        <li>
-                            <a href="{% url 'post_detail' slug=recent.slug %}" class="text-blue-600 hover:underline">{{ recent.title }}</a>
-                        </li>
-                    {% endfor %}
-                </ul>
-            </section>
+            <!-- Default sidebar content or leave empty -->
             {% endblock %}
         </aside>
     </div>

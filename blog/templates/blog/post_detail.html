@@ -2,10 +2,55 @@
 
 {% block title %}{{ post.title }} - My Python Blog{% endblock %}
 
+{% block header %}
+<header class="bg-transparent flex flex-col md:flex-row items-center justify-between px-4 md:px-10 py-4 mb-10 border-b border-gray-200 w-full">
+    <!-- Logo -->
+    <div class="flex items-center gap-3 mb-4 md:mb-0">
+        <span class="text-2xl"><a href="{% url 'post_list' %}">🐍</a></span>
+    </div>
+    <!-- Menu -->
+    <nav class="flex items-center gap-4 md:gap-6 overflow-x-auto">
+
+        <a href="{% url 'post_list' %}" class="text-blue-600 hover:text-blue-600 font-semibold">Home</a>
+        <span class="border-l border-gray-300 h-5 mx-2"></span>
+        <a href="https://github.com/tomwls/django_blog" class="text-blue-600 hover:text-blue-600 font-semibold">Github</a>
+    </nav>
+</header>
+{% endblock %}
+
 {% block content %}
-    <h1 class="text-2xl font-bold mb-10 text-black">{{ post.title }}</h1>
-    <p class="text-black">👤 {{ post.author }}</p>
-    <p class="text-black">🗓️ {{ post.created_at }}</p>
-    <p class="text-black">{{ post.content }}</p>
-    <a href="{% url 'post_list' %}">Back to all posts</a>
+<div class="flex flex-col md:flex-row gap-8 w-full">
+    <!-- Main content -->
+    <div class="flex-1">
+        <article class="space-y-6">
+            <h2 class="text-2xl font-semibold mb-4">
+                <a href="{% url 'post_detail' slug=post.slug %}" class="text-blue-600 underline">{{ post.title }}</a>
+            </h2>
+                <div class="flex flex-wrap items-center gap-2 mb-4">
+                <p class="inline-block bg-yellow-200 text-gray-800 font-semibold text-sm px-2 py-1 rounded">
+                    {{ post.author.username|title }}
+                </p>
+                <span class="inline-block align-middle">{{ clock_icon|safe }}</span>
+                <p class="text-black text-sm">{{ post.created_at }}</p>
+            </div>
+            <p class="text-black mb-4">{{ post.content }}</p>
+            <a href="{% url 'post_list' %}" class="text-blue-600 hover:underline">Back to all posts</a>
+            <hr class="my-8 border-t border-gray-200 rounded">
+        </article>
+    </div>
+    <!-- Sidebar -->
+    <aside class="w-full md:w-80 order-last md:order-none">
+        <section>
+            <!-- Search form -->
+            <form method="get" action="{% url 'post_list' %}" class="w-full">
+                <div class="relative">
+                    <input type="text" name="q" placeholder="Search posts (Enter)" class="border border-gray-200 px-4 py-2 w-full focus:outline-none focus:ring-1 focus:ring-gray-200 pr-10 rounded">
+                    <span class="absolute inset-y-0 right-2 flex items-center pointer-events-none">
+                        {{ enter_icon|safe }}
+                    </span>
+                </div>
+            </form>
+        </section>
+    </aside>
+</div>
 {% endblock %}
